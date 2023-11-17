@@ -18,8 +18,8 @@
             <thead>
               <tr class="light">
                 <th>No</th>
-                <th>Inisial Jurusan</th>
-                <th>Nama Jurusan</th>
+                <th>Inisial jurusan</th>
+                <th>Nama jurusan</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -54,11 +54,11 @@
                 <div class="modal-body">
                   @csrf
                   <div class="form-group">
-                    <label class="h5">Inisial Jurusan</label>
+                    <label class="h5">Inisial jurusan</label>
                     <input type="text" class="form-control" name="inisial_jurusan" placeholder="Inisial Jurusan">
                   </div>
                   <div class="form-group">
-                    <label class="h5">Nama Jurusan</label>
+                    <label class="h5">Nama jurusan</label>
                     <input type="text" class="form-control" name="nama_jurusan" placeholder="Nama Jurusan">
                   </div>
                 </div>
