@@ -48,4 +48,11 @@ class dashboardAdminController extends Controller
         return response()->json($countStudentClass);
     }
 
+    public function getKelas($classroom_id)
+    {
+        $class = Classroom::where('competence_id', $classroom_id)->get();
+
+        return response()->json($class);
+    }
+
 }

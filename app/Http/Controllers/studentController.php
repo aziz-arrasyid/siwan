@@ -98,6 +98,8 @@ class studentController extends Controller
                 'birthdate' => 'required',
                 'gender' => 'required',
                 'religion' => 'required',
+                'competence_id' => 'required',
+                'classroom_id' => 'required',
 			],
 			[
 				'nis.required' => 'nis tidak boleh kosong',
@@ -106,6 +108,8 @@ class studentController extends Controller
 				'birthdate.required' => 'Tempat Lahir siswa tidak boleh kosong',
 				'gender.required' => 'Jenis Kelamin siswa tidak boleh kosong',
 				'religion.required' => 'Agama siswa tidak boleh kosong',
+                'competence_id.required' => 'Jurusan tidak boleh kosong',
+                'classroom_id.required' => 'Kelas tidak boleh kosong',
 			]
 		);
     $student->update($request->all());

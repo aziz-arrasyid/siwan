@@ -20,12 +20,12 @@
                 </div>
 
                 <!-- Modal for Add Data -->
-                <div class="modal fade modal-add-data" tabindex="-1" role="dialog"  aria-hidden="true">
+                <div class="modal fade modal-add-data" id="modal-add-data" tabindex="-1" role="dialog"  aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">{{ $addData }}</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" id="x-modal" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -100,7 +100,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" id="close-modal" data-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>
@@ -120,7 +120,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">{{ $editData }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" id="x-modal" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -169,6 +169,23 @@
                             </select>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="h5">Jurusan</label>
+                            <select id="competence_id_edit" name="competence_id" class="form-control mb-3">
+                                <option value="" selected disabled>Pilih salah satu</option>
+                                @foreach ($competences as $competence)
+                                <option value="{{ $competence->id }}">{{ $competence->inisial_jurusan }} ({{ $competence->nama_jurusan }})</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label class="h5">Kelas</label>
+                            <select id="classroom_id_edit" name="classroom_id" class="form-control mb-3">
+                                <option value="" selected disabled>Pilih salah satu</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="h5">Kontak/WA</label>
                         <input type="text" class="form-control" id="contact" name="contact">
@@ -178,7 +195,7 @@
                         <textarea id="address" name="address" class="form-control" rows="3"></textarea>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" id="close-modal" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
@@ -192,7 +209,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">{{ $pelanggaranData }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" id="x-modal" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -301,7 +318,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="close-modal" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -312,6 +329,17 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
+        //x-modal & close-modal to reload halaman
+        $(document).on('click', '#close-modal, #x-modal', function() {
+            window.location.reload();
+        })
+        //ketike modal muncuk click diluar modal to reload halaman
+        $(document).click(function(e) {
+            if($(e.target).is('#modal-add-data, #modal-edit-data, #modal-pelanggaran-data'))
+            {
+                window.location.reload();
+            }
+        })
         toastr.options = {
             "closeButton": true,
             "newestOnTop": false,
@@ -381,7 +409,6 @@
                     return  '<div class="btn-group btn-group-toggle btn-group-sm btn-group-flat">' +
                         '<a href="#" class="btn btn-warning editData" data-id="' + data.id + '" data-toggle="modal" data-target="#modal-edit-data">Edit</a>' +
                         '<a href="#" class="btn btn-primary pelanggaranData" data-name="' + data.full_name + '" data-id="' + data.id + '" data-toggle="modal" data-target="#modal-pelanggaran-data">Pelanggaran</a>' +
-                        // '<a href="#" class="btn btn-secondary infoData" data-id="' + data.id + '" data-toggle="modal" data-target="#modal-info-data">Info</a>' +
                         '<a class="button btn button-icon bg-danger deleteData" data-id="' + data.id + '">Delete</a>' +
                         '</div>';
                         },
@@ -396,9 +423,7 @@
                         $('.pelanggaranData').on('click', function() {
                             const modal = $('#modal-pelanggaran-data');
                             //fungsi reload halaman ketika close modal
-                            $(document).on('click', '#close-modal', function() {
-                                window.location.reload();
-                            })
+
                             let id = $(this).data('id');
                             // console.log(id);
                             $('#student_id').val(id);
@@ -569,12 +594,28 @@
                         }
 
                         //fungsi tampil data edit
-                        $('.editData').on('click', function() {
+                        $(document).on('click', '.editData', function() {
                             student = $(this).data('id');
                             // fetch data dari kolom input
                             axios.get(`/dashboard-admin/students/${student}/edit`).then(response => {
-                                console.log(response.data);
-                                console.log(response.data.birthdate);
+                                let competence_id = response.data.competence_id;
+                                let classroom_id = response.data.classroom_id;
+                                axios.get(`/dashboard-admin/getClassroom/${competence_id}`).then(response => {
+                                    console.log(response.data);
+                                    $('#classroom_id_edit').empty();
+                                    response.data.forEach(classroom => {
+                                        console.log(classroom.classroom_name);
+
+                                        const option = $('<option>');
+                                        option.val(classroom.id);
+                                        option.text(classroom.classroom_name);
+
+                                        if (classroom.id === classroom_id) {
+                                            option.prop('selected', true);
+                                        }
+                                        $('#classroom_id_edit').append(option);
+                                    });
+                                })
 
                                 $('#nis').val(response.data.nis);
                                 $('#full_name').val(response.data.full_name);
@@ -584,13 +625,32 @@
                                 $('#religion').val(response.data.religion);
                                 $('#contact').val(response.data.contact);
                                 $('#address').val(response.data.address);
+                                $('#competence_id_edit').val(response.data.competence_id);
                             })
                             .catch(error => {
                                 console.error('error fetching data: ', error)
                             })
                         })
+                        //on change jurusan to get kelas
+                        $(document).on('change', '#competence_id_edit', function() {
+                            let competence_id = $(this).val();
+                            axios.get(`/dashboard-admin/getClassroom/${competence_id}`).then(response => {
+                                console.log(response.data);
+                                $('#classroom_id_edit').empty();
+                                $('#classroom_id_edit').append('<option disabled selected>Pilih salah satu</option>');
+                                response.data.forEach(classroom => {
+                                    console.log(classroom.classroom_name);
+
+                                    const option = $('<option>');
+                                    option.val(classroom.id);
+                                    option.text(classroom.classroom_name);
+
+                                    $('#classroom_id_edit').append(option);
+                                });
+                            })
+                        })
                         //fungsi delete
-                        $('.deleteData').on('click', function(event) {
+                        $(document).on('click', '.deleteData', function(event) {
                             event.preventDefault();
                             Swal.fire({
                                 title: 'Apa kamu ingin hapus data?',
@@ -712,6 +772,8 @@
                         $('#alamat_info').val(data.address);
                     }
                 })
+
+
             });
         </script>
         @endpush

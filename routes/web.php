@@ -45,6 +45,7 @@ Route::middleware(['auth', 'userRole:admin'])->prefix('dashboard-admin')->group(
     Route::resource('sekolah', SekolahController::class); //model data pelanggaran
     Route::get('/get-data-sekolah', [dashboardAdminController::class, 'showKepsek']);
     Route::get('/get-cek-siswa/{classroom}', [dashboardAdminController::class, 'cekSiswa']);
+    Route::get('/getClassroom/{competence_id}', [dashboardAdminController::class, 'getKelas']);
 });
 //route untuk guru dan admin fungsi
 Route::middleware(['auth', 'userRole:guru,admin,guruPiket'])->group(function() {
@@ -95,3 +96,9 @@ Route::get('/landing-page-siwan', [dashboardLandingPageController::class, 'index
 Route::get('/register-siwan', [RegisterController::class,'index'])->name('register.index');
 Route::post('/register-siwan-tambah', [RegisterController::class,'register'])->name('register.store');
 route::get('/get-class-register/{competence_id}', [RegisterController::class,'getKelas']);
+
+Route::get('/foo', function () {
+    $targetFolder = base_path() . '/storage/app/public';
+    $linkFolder = $_SERVER['DOCUMENT_ROOT'] . '/storage';
+    symlink($targetFolder, $linkFolder);
+});
