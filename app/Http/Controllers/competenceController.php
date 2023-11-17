@@ -14,7 +14,7 @@ class competenceController extends Controller
    */
   public function index()
   {
-  return view('admin.datajurusan.index')->with([
+  return view('admin.dataJurusan.index')->with([
       'competences' => Competence::orderBy('id', 'desc')->get(),
       'dataTitle' => 'Data Jurusan',
       'addData' => 'Tambah Jurusan',

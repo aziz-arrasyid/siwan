@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\violation;
+use App\Models\Violation;
 use Illuminate\Http\Request;
 
 class violationController extends Controller
