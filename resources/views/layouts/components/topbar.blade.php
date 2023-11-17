@@ -1,5 +1,5 @@
 <div class="navbar-breadcrumb">
-    <h5>Dashboard</h5>
+    <h5></h5>
 </div>
 <div class="d-flex align-items-center">
     <button class="navbar-toggler" type="button" data-toggle="collapse"
