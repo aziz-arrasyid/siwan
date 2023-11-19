@@ -19,7 +19,7 @@ class classroomController extends Controller
     return view('admin.dataKelas.index')->with([
       'competences' => Competence::all(),
       'classroom' => Classroom::orderBy('id', 'desc')->get(),
-      'dataTitle' => 'Kelas',
+      'dataTitle' => 'Data Kelas',
       'addData' => 'Tambah',
       'editData' => 'Update',
       'Guru' => Teacher::all(),

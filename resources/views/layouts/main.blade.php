@@ -40,6 +40,8 @@
         Dashboard-Siswa
         @elseif(Route::is('pelanggaran'))
         Data-Pelanggaran
+        @elseif(Route::is('dataPanggilan'))
+        Data-panggilan-Ortu/Wali
         @endif
     </title>
 

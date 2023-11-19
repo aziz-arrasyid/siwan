@@ -42,12 +42,12 @@
     </div>
 
     <!-- Modal for Add Data -->
-    <div class="modal fade modal-add-data" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal fade modal-add-data" id="modal-add-data" tabindex="-1" role="dialog"  aria-hidden="true">
       <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
         <h5 class="modal-title">{{ $addData }}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" id="x-modal" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
         </div>
@@ -60,10 +60,10 @@
           </div>
           <div class="form-group">
           <label class="h5">Poin Pelanggaran</label>
-          <input type="text" class="form-control" name="poin_pelanggaran" placeholder="Poin Pelanggaran">
+          <input type="number" class="form-control" name="poin_pelanggaran" placeholder="Poin Pelanggaran">
           </div>
           <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" id="close-modal" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </form>
@@ -83,7 +83,7 @@
   <div class="modal-content">
     <div class="modal-header">
     <h5 class="modal-title">{{ $editData }}</h5>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <button type="button" id="x-modal" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
     </div>
@@ -100,7 +100,7 @@
       <input type="text" class="form-control" id="poin_pelanggaran" name="poin_pelanggaran">
       </div>
       <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-modal">Close</button>
       <button type="submit" class="btn btn-primary">Submit</button>
       </div>
     </form>
@@ -129,6 +129,17 @@
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         }
+    //reload when x-modal & close-modal
+    $(document).on('click', '#close-modal, #x-modal', function() {
+        window.location.reload();
+    })
+    //ketika pencet diluar modal maka reload halaman
+    $(document).click(function(e) {
+        if($(e.target).is('#modal-add-data, #modal-edit-data'))
+        {
+            window.location.reload();
+        }
+    })
   //fungsi delete
   $('.deleteData').on('click', function(event) {
     event.preventDefault();

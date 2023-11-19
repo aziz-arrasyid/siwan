@@ -8,6 +8,7 @@ use App\Models\Teacher;
 use App\Models\Classroom;
 use App\Models\Violation;
 use App\Models\Competence;
+use App\Models\PanggilanOrtu;
 use App\Models\pelanggaran;
 use Illuminate\Http\Request;
 
@@ -65,13 +66,19 @@ class dashboardGuruController extends Controller
         $student = Student::where('classroom_id', $classroom->id)->get();
 
         return view('guru.infoSiswa.index')->with([
-            'dataTitle' => 'pelanggaran',
+            'dataTitle' => 'Biodata Siswa',
             'addData' => 'Tambah data',
             'editData' => 'Edit data',
             'DataDiri' => $teacher,
             'Student' => $student,
             'competences' => Competence::all(),
         ]);
+    }
+
+    public function profileSiswa($student_id)
+    {
+        $student = Student::find($student_id);
+        return response()->json($student);
     }
 
     public function tambahSiswa(Request $request)
@@ -82,12 +89,31 @@ class dashboardGuruController extends Controller
         $request->validate([
                 'nis' => 'required',
                 'full_name' => 'required',
+                'birthplace' => 'required',
+                'birthdate' => 'required',
+                'gender' => 'required',
+                'religion' => 'required',
+                'contact' => 'required',
+                'address' => 'required',
             ],
             [
                 'nis.required' => 'nis siswa tidak boleh kosong',
                 'full_name.required' => 'nama siswa tidak boleh kosong',
+                'birthplace.required' => 'Tempat lahir siswa tidak boleh kosong',
+                'birthdate.required' => 'Tanggal lahir siswa tidak boleh kosong',
+                'gender.required' => 'Jenis kelamin siswa tidak boleh kosong',
+                'religion.required' => 'Agama siswa tidak boleh kosong',
+                'contact.required' => 'Nomor HP/WA siswa tidak boleh kosong',
+                'address.required' => 'Alamat siswa tidak boleh kosong',
             ]
         );
+
+        if(Student::where('nis', $request->nis)->exists())
+        {
+            return redirect()->back()->withErrors([
+                'error' => 'Siswa dengan NIS tersebut sudah ada',
+            ]);
+        }
 
         Student::create([
             'classroom_id' => $classroom->id,
@@ -121,16 +147,26 @@ class dashboardGuruController extends Controller
                 'birthdate' => 'required',
                 'gender' => 'required',
                 'religion' => 'required',
+                'contact' => 'required',
+                'address' => 'required',
             ],
             [
-                'nis.required' => 'nis tidak boleh kosong',
+                'nis.required' => 'nis siswa tidak boleh kosong',
                 'full_name.required' => 'nama siswa tidak boleh kosong',
-                'birthplace.required' => 'Tanggal Lahir siswa tidak boleh kosong',
-                'birthdate.required' => 'Tempat Lahir siswa tidak boleh kosong',
-                'gender.required' => 'Jenis Kelamin siswa tidak boleh kosong',
+                'birthplace.required' => 'Tempat lahir siswa tidak boleh kosong',
+                'birthdate.required' => 'Tanggal lahir siswa tidak boleh kosong',
+                'gender.required' => 'Jenis kelamin siswa tidak boleh kosong',
                 'religion.required' => 'Agama siswa tidak boleh kosong',
+                'contact.required' => 'Nomor HP/WA siswa tidak boleh kosong',
+                'address.required' => 'Alamat siswa tidak boleh kosong',
             ]
         );
+
+        if (Student::where('nis', $request->nis)->where('nis', '!=', $student->nis)->exists()) {
+            return response()->json([
+                'error' => 'Siswa dengan NIS tersebut sudah ada',
+            ], 422);
+        }
         $student->update($request->all());
 
         return response()->json();
@@ -184,6 +220,14 @@ class dashboardGuruController extends Controller
         ]);
 
         return response()->json();
+    }
+
+    public function infoPanggilan($panggilan_id)
+    {
+        $panggilan = PanggilanOrtu::find($panggilan_id);
+        $panggilan->load('student');
+
+        return response()->json($panggilan);
     }
 
 }

@@ -19,7 +19,7 @@ class PanggilanOrtuController extends Controller
     {
         $teacher = Teacher::where('user_id', auth()->user()->id)->first();
         $classroom = Classroom::where('teacher_id', $teacher->id)->first();
-        $student = Student::where('classroom_id', $teacher->id)->get();
+        $student = Student::where('classroom_id', $classroom->id)->get();
         if($classroom == null)
         {
             return redirect()->route('teacher');
@@ -50,12 +50,13 @@ class PanggilanOrtuController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-                'dokumentasi' => 'required',
+                'dokumentasi' => 'required|image',
                 'permasalahan' => 'required',
                 'statusPanggilan' => 'required',
                 'student_id' => 'required',
             ],[
                 'dokumentasi.required' => 'Foto dokumentasi tidak boleh kosong',
+                'dokumentasi.image' => 'File dokumentasi harus berupa foto',
                 'permasalahan.required' => 'Permasalahan tidak boleh kosong',
                 'statusPanggilan.required' => 'Status panggilan tidak boleh kosong',
                 'student_id' => 'Nama siswa tidak boleh kosong',
@@ -87,11 +88,6 @@ class PanggilanOrtuController extends Controller
 
             // Simpan gambar yang sudah dikompresi ke penyimpanan
             Storage::put('public/images/' . $imageName, $compressedImage);
-        }elseif($request->has('dokumentasi'))
-        {
-            $imageContents = file_get_contents($request->dokumentasi);
-            $imageName = 'image_'. 'nis_'. $student->nis. now()->format('Ymd_His') . '.jpeg';
-            Storage::put('public/images/'. $imageName, $imageContents);
         }else{
             return response()->json([
                 'error' => 'Data gambar tidak bisa di input',

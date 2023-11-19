@@ -28,14 +28,14 @@
                         </thead>
                         <tbody>
                             @foreach ($Student as $student)
-                            <tr>
+                            <tr data-id="{{ $student->id }}" id="tr-data">
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $student->nis }}</td>
                                 <td>{{ $student->full_name }}</td>
                                 <td>{{ $student->gender == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                                 <td>{{ $student->religion }}</td>
                                 <td>{{ $student->birthplace }}</td>
-                                <td>
+                                <td class="button">
                                     <div class="btn-group btn-group-toggle btn-group-flat">
                                         <a class="button btn button-icon bg-warning editData" href="#" data-id="{{ $student->id }}" data-toggle="modal" data-target="#modal-edit-data">Edit</a>
                                         <a class="button btn button-icon bg-danger deleteData" data-id="{{ $student->id }}" href="#">Delete</a>
@@ -48,12 +48,12 @@
                 </div>
 
                 <!-- Modal for Add Data -->
-                <div class="modal fade modal-add-data" tabindex="-1" role="dialog"  aria-hidden="true">
+                <div class="modal fade modal-add-data" id="modal-add-data" tabindex="-1" role="dialog"  aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">{{ $addData }}</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" id="x-modal" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -131,7 +131,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">{{ $editData }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" id="x-modal" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -199,6 +199,64 @@
 </div>
 </div>
 <!-- Modal for Edit Data -->
+<!-- Modal for info Data -->
+<div class="modal fade modal-info-data" tabindex="-1" id="modal-info-data" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Informasi siswa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                        <div class="col">
+                            <label class="h5" for="nis_info">NIS</label>
+                            <input type="text" class="form-control" readonly id="nis_info">
+                        </div>
+                        <div class="col">
+                            <label class="h5" for="full_name_info">Nama Lengkap</label>
+                            <input type="text" class="form-control"readonly id="full_name_info">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="h5" for="birthplace_info">Tempat Lahir</label>
+                            <input type="text" class="form-control" readonly id="birthplace_info">
+                        </div>
+                        <div class="col">
+                            <label class="h5" for="birthdate_info">Tanggal Lahir</label>
+                            <input id="birthdate_info" readonly type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="h5" for="jenis_kelamin_info">Jenis kelamin</label>
+                            <input type="text" class="form-control" readonly id="jenis_kelamin_info">
+                        </div>
+                        <div class="col">
+                            <label class="h5" for="agama_info">Agama</label>
+                            <input type="text" class="form-control" readonly id="agama_info">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="h5" for="contact_info">Kontak/WA</label>
+                        <input type="text" class="form-control" readonly name="contact" id="contact_info">
+                    </div>
+                    <div class="form-group">
+                        <label class="h5" for="address_info">Alamat</label>
+                        <textarea name="address" class="form-control" readonly id="address_info" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Modal for info Data -->
 @endsection
 
 @push('scripts')
@@ -221,9 +279,38 @@
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         }
+        //info data ketika pencet tr-data
+        $(document).on('click', '#tr-data', function(event) {
+                if(!$(event.target).hasClass('button'))
+                {
+                    let student_id = $(this).data('id');
+                    // console.log(student_id);
+                    axios.get(`/dashboard-guru/informasi-siswa/${student_id}`).then(response => {
+                        const modal = $('#modal-info-data');
+                        modal.modal('show');
+                        // console.log(response.data);
+                        // $('#preview-foto-info').attr('src', '{{ asset('storage/images') }}/' + response.data.dokumentasi);
+                        $('#nis_info').val(response.data.nis);
+                        $('#full_name_info').val(response.data.full_name);
+                        $('#birthplace_info').val(response.data.birthplace);
+                        $('#birthdate_info').val(response.data.birthdate);
+                        $('#jenis_kelamin_info').val(response.data.gender);
+                        $('#agama_info').val(response.data.religion);
+                        $('#contact_info').val(response.data.contact);
+                        $('#address_info').val(response.data.address);
+                    })
+                }
+            })
         //close modal reload
-        $(document).on('click', '#close-modal', function() {
+        $(document).on('click', '#close-modal, #x-modal', function() {
             window.location.reload();
+        })
+        //ketika pencet diluar modal maka reload halaman
+        $(document).click(function(e) {
+            if($(e.target).is('#modal-add-data, #modal-edit-data'))
+            {
+                window.location.reload();
+            }
         })
         // toastr:: success notification
         @if(Session('success'))
@@ -297,9 +384,16 @@
                         }
                         errorMessage += errorMessages[field][0];
                     }
-                    Swal.fire('Data gagal di edit', errorMessage, 'error').then(() => {
-                        modal.modal('show');
-                    });
+                    if(error.response.data.error)
+                    {
+                        Swal.fire('Data gagal di edit', error.response.data.error, 'error').then(() => {
+                            modal.modal('show');
+                        });
+                    }else{
+                        Swal.fire('Data gagal di edit', errorMessage, 'error').then(() => {
+                            modal.modal('show');
+                        });
+                    }
                 }else{
                     Swal.fire('Data gagal di edit', 'Terjadi kesalahan pada sisi server, hubungi kami segera', 'error');
                 }
@@ -308,6 +402,7 @@
         })
         //delete data
         $(document).on('click', '.deleteData', function() {
+            student = $(this).data('id');
             Swal.fire({
                 title: "Apa kamu ingin hapus?",
                 text: "Data akan terhapus permanen",

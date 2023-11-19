@@ -2,9 +2,11 @@
 
 use Monolog\Registry;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\FaceController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\logoutController;
+use App\Http\Controllers\KreatorController;
 use App\Http\Controllers\profileController;
 use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\studentController;
@@ -21,10 +23,9 @@ use App\Http\Controllers\PanggilanOrtuController;
 use App\Http\Controllers\changePasswordController;
 use App\Http\Controllers\dashboardAdminController;
 use App\Http\Controllers\dashboardSiswaController;
-use App\Http\Controllers\dashboardGuruPiketController;
 use App\Http\Controllers\dashboardKreatorController;
+use App\Http\Controllers\dashboardGuruPiketController;
 use App\Http\Controllers\dashboardLandingPageController;
-use App\Http\Controllers\KreatorController;
 
 // Login | Logout Routes
 Route::get('login', [loginController::class, 'index'])->middleware('guest')->name('login');
@@ -60,8 +61,10 @@ Route::middleware(['auth', 'userRole:guru'])->prefix('dashboard-guru')->group(fu
     Route::delete('/delete-data-siswa/{student}', [dashboardGuruController::class, 'deleteSiswa'])->name('delete.siswa');
     Route::put('/update-data-siswa/{student}', [dashboardGuruController::class, 'updateSiswa'])->name('update.siswa');
     Route::get('/tampil-data-siswa/{student}', [dashboardGuruController::class, 'tampilEditDataSiswa'])->name('tampilData.siswa');
+    Route::get('/informasi-siswa/{student}', [dashboardGuruController::class, 'profileSiswa'])->name('profileSiswa');
     Route::post('/tambah-siswa', [dashboardGuruController::class, 'tambahSiswa'])->name('tambah.siswa');
     Route::put('/update-profile/{teacher}', [dashboardGuruController::class, 'updateDataPribadi'])->name('updateDataPribadi');
+    Route::get('/info-panggilan/{panggilan_id}', [dashboardGuruController::class, 'infoPanggilan'])->name('infoPanggilan');
     Route::resource('panggilan-ortu-wali', PanggilanOrtuController::class);
     // Route::get('/siswa-pelanggaran-server', [dashboardGuruController::class, 'serverPelanggaran'])->name('server.pelanggaran');
 });
@@ -84,6 +87,8 @@ Route::middleware(['auth', 'userRole:siswa'])->prefix('dashboard-siswa')->group(
    Route::get('/', [dashboardSiswaController::class, 'index'])->name('siswa');
    Route::put('/edit-profile-siswa/{student}', [dashboardSiswaController::class, 'editProfileSiswa']);
    Route::get('/data-pelanggaran', [dashboardSiswaController::class, 'pelanggaran'])->name('pelanggaran');
+   Route::get('/data-panggilan', [dashboardSiswaController::class, 'dataPanggilan'])->name('dataPanggilan');
+   Route::get('/data-panggilan-profile/{panggilan_id}', [dashboardSiswaController::class, 'profilePanggilan'])->name('profilePanggilan');
 });
 //route untuk kreator
 Route::middleware(['auth', 'userRole:kreator'])->prefix('dashboard-kreator')->group(function () {
@@ -101,7 +106,10 @@ Route::get('/foo', function () {
     $targetFolder = base_path() . '/storage/app/public';
     $linkFolder = $_SERVER['DOCUMENT_ROOT'] . '/storage';
     symlink($targetFolder, $linkFolder);
+    // Artisan::call('storage:link');
 });
+
+// klo gak bisa /foo ganti dengan "ln -s /home/pplp9949/addon_domain/testweb.pplg-smkn4tpi.com/storage/app/public/images /home/pplp9949/public_html/testweb.pplg-smkn4tpi.com/storage"
 
 Route::get('/{any}', function () {
     return view('errors.404'); // Menampilkan halaman 404 yang sudah Anda persiapkan di direktori views/errors/404.blade.php

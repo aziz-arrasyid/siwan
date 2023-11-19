@@ -20,18 +20,18 @@
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>Status panggilan</th>
-                                <th>permasalahan</th>
+                                <th class="text-center">permasalahan</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($Panggilan as $panggilan)
-                            <tr>
+                            <tr data-id="{{ $panggilan->id }}" id="tr-data">
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $panggilan->student->full_name }}</td>
                                 <td>{{ $panggilan->statusPanggilan == 'I' ? 'Panggilan I' : 'Panggilan II' }}</td>
-                                <td>{{ $panggilan->permasalahan }}</td>
-                                <td>
+                                <td class="text-center">{{ Str::substr($panggilan->permasalahan, 0, 100) }}{{ Str::length($panggilan->permasalahan) > 100 ? '...' : '' }}</td>
+                                <td class="button">
                                     <div class="btn-group btn-group-toggle btn-group-flat">
                                         <a class="button btn button-icon bg-warning editData" href="#" data-id="{{ $panggilan->id }}" data-toggle="modal" data-target="#modal-edit-data">Edit</a>
                                         <a class="button btn button-icon bg-danger deleteData" data-id="{{ $panggilan->id }}" href="#">Delete</a>
@@ -43,55 +43,6 @@
                     </table>
                 </div>
 
-                <!-- Modal for Add Data capture photo -->
-                <div class="modal fade modal-add-data" tabindex="-1" role="dialog"  aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">{{ $addData }}</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="form-tambah-panggilan-ortu-wali">
-                                    @csrf
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <p class="h5">Preview photo</p>
-                                            <img id="preview-foto" class="img-fluid rounded" alt="Responsive image">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="student_id" class="h5">nama siswa</label>
-                                        <select id="student_id" name="student_id" class="form-control">
-                                            <option selected disabled>Pilih Salah satu</option>
-                                            @foreach($Student as $student)
-                                            <option value="{{$student->id}}">{{$student->full_name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="status_panggilan" class="h5">Tahapan panggilan</label>
-                                        <select id="status_panggilan" name="statusPanggilan" class="form-control">
-                                            <option selected disabled>Pilih Salah satu</option>
-                                            <option value="I">Panggilan I</option>
-                                            <option value="II">Panggilan II</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="permasalahan" class="h5">Permasalahan/pelanggaran</label>
-                                        <textarea name="permasalahan" class="form-control" id="permasalahan" cols="30" rows="5"></textarea>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <!-- Modal for Add Data input photo -->
                 <div class="modal fade modal-add-data-input-foto" tabindex="-1" role="dialog"  aria-hidden="true">
                     <div class="modal-dialog modal-lg">
@@ -117,7 +68,9 @@
                                                 <label class="custom-file-label" for="input_foto">Choose file</label>
                                                 </div>
                                             </div>
-                                            <img id="preview-foto-input" class="img-fluid rounded mt-2" alt="Responsive image">
+                                            <div class="d-flex justify-content-center">
+                                                <img id="preview-foto-input" class="img-fluid rounded mt-2" alt="Responsive image">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -155,19 +108,6 @@
     </div>
 </div>
 
-<div id="pembungkus-camera" style="display: none; position: absolute; top: 55%; left: 50%; transform: translate(-50%, -50%);">
-    <div class="card d-flex align-items-center justify-content-center">
-        <video id="video" width="640" height="480" style="transform: scaleX(-1)"></video>
-        <div class="card-body">
-            <button type="button" class="btn btn-success mt-2" id="capture">Foto</button>
-            <button type="button" class="btn btn-success mt-2" id="switch">switch camera</button>
-            <button type="button" class="btn btn-success mt-2" id="cancel-foto">Cancel</button>
-        </div>
-    </div>
-</div>
-
-<canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
-
 <!-- Modal for Edit Data -->
 <div class="modal fade modal-edit-data" tabindex="-1" id="modal-edit-data" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -189,7 +129,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="student_id" class="h5">nama siswa</label>
+                        <label for="student_id_edit" class="h5">nama siswa</label>
                         <select id="student_id_edit" name="student_id" class="form-control">
                             <option selected disabled>Pilih Salah satu</option>
                             @foreach($Student as $student)
@@ -198,7 +138,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="status_panggilan" class="h5">Tahapan panggilan</label>
+                        <label for="status_panggilan_edit" class="h5">Tahapan panggilan</label>
                         <select id="status_panggilan_edit" name="statusPanggilan" class="form-control">
                             <option selected disabled>Pilih Salah satu</option>
                             <option value="I">Panggilan I</option>
@@ -206,7 +146,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="permasalahan" class="h5">Permasalahan/pelanggaran</label>
+                        <label for="permasalahan_edit" class="h5">Permasalahan/pelanggaran</label>
                         <textarea name="permasalahan" class="form-control" id="permasalahan_edit" cols="30" rows="5"></textarea>
                     </div>
                     <div class="modal-footer">
@@ -220,42 +160,37 @@
 </div>
 
 <!-- Modal for Info Data -->
-<div class="modal fade modal-info-data" tabindex="-1" id="modal-edit-data" role="dialog"  aria-hidden="true">
+<div class="modal fade modal-info-data" tabindex="-1" id="modal-info-data" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">{{ $editData }}</h5>
+                <h5 class="modal-title">informasi panggilan</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="form-edit">
-                    @csrf
-                    @method('PUT')
-                    <div class="form-group">
-                        <label for="namaSiswaEdit" class="h5">nama siswa</label>
-                        <select id="namaSiswaEdit" name="student_id" class="form-control">
-                            <option selected disabled>Pilih Salah satu</option>
-                            {{-- @foreach($Student as $student)
-                            <option value="{{$student->id}}">{{$student->full_name}}</option>
-                            @endforeach --}}
-                        </select>
+                <div class="card">
+                    <div class="card-body">
+                        <p class="h5">Preview photo</p>
+                        <img id="preview-foto-info" class="img-fluid rounded" alt="Responsive image">
                     </div>
-                    <div class="form-group">
-                        <label for="pelanggaranEdit" class="h5">Jenis pelanggaran</label>
-                        <select id="pelanggaranEdit" name="violation_id" class="form-control">
-                            <option selected disabled>Pilih Salah satu</option>
-                            {{-- @foreach($Violation as $violation)
-                            <option value="{{$violation->id}}">{{$violation->nama_pelanggaran}}</option>
-                            @endforeach --}}
-                        </select>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
+                </div>
+                <div class="form-group">
+                    <label class="h5" for="nama_siswa_info">Nama siswa</label>
+                    <input type="text" class="form-control" readonly id="nama_siswa_info" name="title">
+                </div>
+                <div class="form-group">
+                    <label class="h5" for="status_panggilan_info">Tahapan panggilan</label>
+                    <input type="text" class="form-control" readonly id="status_panggilan_info" name="title">
+                </div>
+                <div class="form-group">
+                    <label for="permasalahan_info" class="h5">Permasalahan/pelanggaran</label>
+                    <textarea name="permasalahan" class="form-control" readonly id="permasalahan_info" cols="30" rows="5"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
@@ -288,70 +223,24 @@
             })
             //button tambah data
             $(document).on('click', '#button-tambah-data', function() {
-                Swal.fire({
-                    title: "Apa kamu ingin menggunakan camera foto?",
-                    text: "",
-                    icon: "warning",
-                    width: 750,
-                    showDenyButton: true,
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Iya, saya ingin menggunakan camera",
-                    cancelButtonText: "Cancel",
-                    denyButtonText: `Tidak, saya ingin input foto manual`,
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        try
-                        {
-                            navigator.mediaDevices.getUserMedia({video: true}).then((stream) => {
-                                const video = $('#video')[0];
-                                $('#pembungkus-camera').css('display', 'block');
-                                video.srcObject = stream;
-                                video.play();
-                                previewStream = stream;
-                            }).catch((error) => {
-                                console.log('Error accessing camera:', error);
-                                swal.fire('Akses kamera ditolak', 'Izinkan akses camera', 'error');
-                            });
-                        }catch(error)
-                        {
-                            console.log('error accessing camera: ', error);
-                            swal.fire('Akses camera ditolak', 'Terjadi kesalahan', 'error');
-                        }
-                    }else if(result.isDenied){
-                        $('.modal-add-data-input-foto').modal('show');
-                        $('#preview-foto-input').css('display', 'none');
-                    }
-                });
+                $('.modal-add-data-input-foto').modal('show');
+                $('#preview-foto-input').css('display', 'none');
             })
-            //cancel foto
-            $(document).on('click', '#cancel-foto', function() {
-                const video = $('#video')[0];
-                if(video.srcObject)
+            // info data ketika tr dipencet
+            $(document).on('click', '#tr-data', function(event) {
+                if(!$(event.target).hasClass('button'))
                 {
-                    const tracks = video.srcObject.getTracks();
-                    tracks.forEach(track => track.stop());
-                    video.srcObject = null;
-                    $('#pembungkus-camera').css('display', 'none');
+                    let panggilan_id = $(this).data('id');
+                    // console.log(panggilan_id);
+                    axios.get(`/dashboard-guru/info-panggilan/${panggilan_id}`).then(response => {
+                        const modal = $('#modal-info-data');
+                        modal.modal('show');
+                        $('#preview-foto-info').attr('src', '{{ asset('storage/images') }}/' + response.data.dokumentasi);
+                        $('#nama_siswa_info').val(response.data.student.full_name);
+                        $('#status_panggilan_info').val(response.data.statusPanggilan == 'I' ? 'panggilan I' : 'Panggilan II');
+                        $('#permasalahan_info').val(response.data.permasalahan);
+                    })
                 }
-            })
-            //capture foto
-            $(document).on('click', '#capture', function() {
-                const player = document.getElementById('video');
-                const canvas = document.getElementById('canvas');
-                const context = canvas.getContext('2d');
-                context.translate(canvas.width, 0);
-                context.scale(-1, 1);
-                context.drawImage(player, 0, 0, canvas.width, canvas.height);
-
-                let capturedImage = canvas.toDataURL('image/jpeg');
-
-                player.srcObject.getVideoTracks().forEach(track => track.stop());
-                $('#preview-foto').attr('src', capturedImage);
-
-                $('#pembungkus-camera').css('display', 'none');
-                $('.modal-add-data').modal('show');
             })
             //input foto preview image
             $(document).on('change', '#input_foto', function() {
@@ -366,76 +255,13 @@
                     $('#preview-foto-input').attr('src', urlImage);
                 }
             })
-            //form tambah data
-            document.getElementById('form-tambah-panggilan-ortu-wali').addEventListener('submit', function(event) {
-                event.preventDefault();
-                const modal = $('.modal-add-data');
-
-                let imageURL = $('#preview-foto').attr('src');
-                let permasalahan = $('#permasalahan').val();
-                let statusPanggilan = $('#status_panggilan').val();
-                let student_id = $('#student_id').val();
-                // console.log('imageURL:', imageURL);
-
-                axios.post(`/dashboard-guru/panggilan-ortu-wali`, {
-                    dokumentasi: imageURL,
-                    permasalahan: permasalahan,
-                    statusPanggilan: statusPanggilan,
-                    student_id: student_id,
-                }).then(response => {
-                    modal.modal('hide');
-                    swal.fire('Data berhasil ditambahkan', '', 'success').then(() => {
-                        window.location.reload();
-                    })
-                }).catch(error => {
-                    console.error('Error updating data: ', error);
-                    modal.modal('hide');
-                    if(error.response && error.response.status === 422){
-                        const errorMessages = error.response.data.errors;
-                        let errorMessage = '';
-                        let isFirstError = true; // Flag to track the first error
-                        for (const field in errorMessages) {
-                            if (!isFirstError) {
-                                errorMessage += ', '; // Add a comma before the error message
-                            } else {
-                                isFirstError = false;
-                            }
-                            errorMessage += errorMessages[field][0];
-                        }
-                        if(error.response.data.error){
-                            Swal.fire('Data gagal di tambah', error.response.data.error, 'error').then(() => {
-                                modal.modal('show');
-                            })
-                        }else{
-                            Swal.fire('Data gagal di tambah', errorMessage, 'error').then(() => {
-                                modal.modal('show');
-                            });
-                        }
-                    }else{
-                        Swal.fire('Data gagal di tambah', 'Terjadi kesalahan pada sisi server, hubungi kami segera', 'error');
-                    }
-                    console.error(error);
-                })
-            })
             //form tambah data input foto
             document.getElementById('form-tambah-panggilan-ortu-wali-input-foto').addEventListener('submit', function(event) {
                 event.preventDefault();
                 const modal = $('.modal-add-data-input-foto');
 
-                let inputFotoGet = $('#input_foto')[0]; // atau document.getElementById('input_foto');
-                let imageURL = inputFotoGet.files[0];
-
-                let permasalahan = $('#permasalahan-input').val();
-                let statusPanggilan = $('#status_panggilan-input').val();
-                let student_id = $('#student_id-input').val();
-                console.log('imageURL:', imageURL);
-
                 // Create FormData object
-                let formData = new FormData();
-                formData.append('dokumentasi', imageURL);
-                formData.append('permasalahan', permasalahan);
-                formData.append('statusPanggilan', statusPanggilan);
-                formData.append('student_id', student_id);
+                let formData = new FormData(this);
 
                 axios.post(`/dashboard-guru/panggilan-ortu-wali`, formData).then(response => {
                     modal.modal('hide');

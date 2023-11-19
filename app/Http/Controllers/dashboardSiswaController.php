@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Models\Classroom;
+use App\Models\PanggilanOrtu;
 use App\Models\pelanggaran;
 use Illuminate\Http\Request;
 
@@ -61,5 +62,22 @@ class dashboardSiswaController extends Controller
         $student->update($request->all());
 
         return response()->json();
+    }
+
+    public function dataPanggilan()
+    {
+        $student = Student::where('nis', auth()->user()->username)->first();
+        return view('siswa.panggilanOrtuWali.index')->with([
+            'DataDiri' => $student,
+            'Panggilan' => PanggilanOrtu::where('student_id', $student->id)->get(),
+            'dataTitle' => 'Data panggilan ortu/wali',
+        ]);
+    }
+
+    public function profilePanggilan($panggilan_id)
+    {
+        $panggilan = PanggilanOrtu::find($panggilan_id);
+        $panggilan->load('student');
+        return response()->json($panggilan);
     }
 }

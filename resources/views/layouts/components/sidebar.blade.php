@@ -231,7 +231,16 @@
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
               </svg>
-              <span class="ml-4">Data Pelanggaran</span>
+              <span class="ml-4">Data pelanggaran</span>
+            </a>
+          </li>
+          <li class="{{ Route::is('dataPanggilan') ? 'active' : '' }}">
+            <a href="{{ route('dataPanggilan') }}" class="svg-icon">
+              <svg class="svg-icon" width="25" height="25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+              <span class="ml-4">Data panggilan</span>
             </a>
           </li>
         </ul>

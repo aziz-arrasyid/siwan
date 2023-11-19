@@ -28,6 +28,6 @@ class Student extends Model
 
   public function panggilanOrtu()
   {
-    return $this->hasOne(PanggilanOrtu::class);
+    return $this->hasMany(PanggilanOrtu::class);
   }
 }
