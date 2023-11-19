@@ -102,3 +102,8 @@ Route::get('/foo', function () {
     $linkFolder = $_SERVER['DOCUMENT_ROOT'] . '/storage';
     symlink($targetFolder, $linkFolder);
 });
+
+Route::get('/{any}', function () {
+    return view('errors.404'); // Menampilkan halaman 404 yang sudah Anda persiapkan di direktori views/errors/404.blade.php
+})->where('any', '.*');
+

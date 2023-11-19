@@ -6,32 +6,10 @@
         <div class="card card-block card-stretch card-height">
             <div class="card-body">
                 <div class="top-block d-flex align-items-center justify-content-between">
-                    <h5>Kelas</h5>
+                    <h5>Berita</h5>
                     <span class="badge badge-primary">Total</span>
                 </div>
-                <h3>1</h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 col-lg-3">
-        <div class="card card-block card-stretch card-height">
-            <div class="card-body">
-                <div class="top-block d-flex align-items-center justify-content-between">
-                    <h5>Jurusan</h5>
-                    <span class="badge badge-warning">Total</span>
-                </div>
-                <h3>2</h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 col-lg-3">
-        <div class="card card-block card-stretch card-height">
-            <div class="card-body">
-                <div class="top-block d-flex align-items-center justify-content-between">
-                    <h5>Guru</h5>
-                    <span class="badge badge-success">Total</span>
-                </div>
-                <h3>3</h3>
+                <h3>{{ $countBerita }}</h3>
             </div>
         </div>
     </div>
@@ -60,6 +38,7 @@
         @if(Session('login'))
         toastr.success('{{ session('login') }}');
         @endif
+
     })
 </script>
 @endpush

@@ -6,16 +6,40 @@
   <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>
+        {{-- admin page --}}
         @if (Route::is('admin'))
         Dashboard-Admin
         @elseif(Route::is('violations.index'))
-        Nama-Pelanggaran
+        Data-Pelanggaran
         @elseif(Route::is('sekolah.index'))
         Data-Sekolah
         @elseif(Route::is('competences.index'))
         Data-Jurusan
         @elseif(Route::is('teachers.index'))
         Data-Guru
+        @elseif(Route::is('classroom.index'))
+        Data-Kelas
+        @elseif(Route::is('students.index'))
+        Data-Siswa
+        {{-- kreator page --}}
+        @elseif(Route::is('kreator'))
+        Dashboard-Kreator
+        @elseif(Route::is('kreator.index'))
+        Data-Berita
+        {{-- guru page --}}
+        @elseif(Route::is('teacher'))
+        Dashboard-Guru
+        @elseif(Route::is('siswa.biodata'))
+        Biodata-Siswa
+        @elseif(Route::is('siswa.pelanggaran'))
+        Pelanggaran-Siswa
+        @elseif(Route::is('panggilan-ortu-wali.index'))
+        Panggilan-Ortu/Wali
+        {{-- siswa page --}}
+        @elseif(Route::is('siswa'))
+        Dashboard-Siswa
+        @elseif(Route::is('pelanggaran'))
+        Data-Pelanggaran
         @endif
     </title>
 
@@ -43,30 +67,30 @@
   {{-- <div id="loading">
       <div id="loading-center">
       </div>
-  </div> --}}
-  <!-- loader END -->
-  <!-- Wrapper Start -->
-  <div class="wrapper">
+</div> --}}
+<!-- loader END -->
+<!-- Wrapper Start -->
+<div class="wrapper">
     <div class="iq-sidebar sidebar-default ">
-      @include('layouts.components.sidebar')
+        @include('layouts.components.sidebar')
     </div>
     <div class="iq-top-navbar">
-      <div class="iq-navbar-custom">
-        <nav class="navbar navbar-expand-lg navbar-light p-0">
-          <div class="iq-navbar-logo d-flex align-items-center justify-content-between">
+        <div class="iq-navbar-custom">
+            <nav class="navbar navbar-expand-lg navbar-light p-0">
+                <div class="iq-navbar-logo d-flex align-items-center justify-content-between">
             <i class="ri-menu-line wrapper-menu"></i>
             <a href="" class="header-logo">
-              <h4 class="logo-title text-uppercase">SIWAN</h4>
+                <h4 class="logo-title text-uppercase">SIWAN</h4>
 
             </a>
-          </div>
-          @include('layouts.components.topbar')
-          </div>
-        </nav>
-      </div>
+        </div>
+        @include('layouts.components.topbar')
     </div>
-    <div class="content-page">
-      <div class="container-fluid">
+</nav>
+</div>
+</div>
+<div class="content-page">
+    <div class="container-fluid">
           @yield('content')
       </div>
     </div>
@@ -84,7 +108,7 @@
           </ul>
         </div>
         <div class="col-lg-6 text-right">
-          <span class="mr-1"><script>document.write(new Date().getFullYear())</script>©</span> <a href="#" class="">TIM RPL | SMK Negeri 4 Tanjungpinang</a>.
+          <span class="mr-1"><script>document.write(new Date().getFullYear())</script>©</span> <a href="#" class="">SMK Negeri 4 Tanjungpinang</a>.
         </div>
       </div>
     </div>

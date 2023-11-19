@@ -2,7 +2,7 @@
 
 @section('content')
 {{-- {{ dd($studentCount) }} --}}
-@if ($studentCount > 0)
+@if ($classroom != null)
 <div class="row">
   <div class="col-md-6 col-lg-3">
     <div class="card card-block card-stretch card-height">

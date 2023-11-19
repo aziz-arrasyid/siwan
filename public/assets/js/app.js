@@ -607,7 +607,7 @@ Index Of Script
 /*---------------------------------------------------------------------
         Circle Progress
   -----------------------------------------------------------------------*/
-  
+
   const progressBar = document.getElementsByClassName('circle-progress')
   Array.from(progressBar, (elem) => {
       const minValue = elem.getAttribute('data-min-value')
@@ -623,9 +623,9 @@ Index Of Script
       });
       }
   })
- 
 
-  
+
+
 
   /*---------------------------------------------------------------------
     List and Grid
@@ -638,5 +638,5 @@ Index Of Script
       $(this).parent().find('.active').removeClass('active')
       $(this).addClass('active')
     })
-    
+
 })(jQuery);

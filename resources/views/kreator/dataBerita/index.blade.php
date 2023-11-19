@@ -18,17 +18,17 @@
             <thead>
               <tr class="light">
                 <th>No</th>
-                <th>Judul berita</th>
-                <th>Konten singkat</th>
-                <th>Action</th>
+                <th class="text-center">Judul berita</th>
+                <th class="text-center">Konten singkat</th>
+                <th class="text-center">Action</th>
               </tr>
             </thead>
             <tbody>
               @foreach ($Kreator as $kreator)
               <tr data-id="{{ $kreator->id }}" id="tr-data">
                 <td>{{ $loop->index + 1 }}</td>
-                <td>{{ $kreator->title }}</td>
-                <td>{{ $kreator->content }}</td>
+                <td class="text-center">{{ $kreator->title }}</td>
+                <td class="text-center">{{ substr($kreator->content, 0, 100) }} {{ strlen($kreator->content) > 100 ? '...' : '' }}</td>
                 <td class="button">
                   <div class="btn-group btn-group-toggle btn-group-flat">
                     <a class="button btn button-icon bg-warning editData" href="#" data-id="{{ $kreator->id }}" data-toggle="modal" data-target="#modal-edit-data">Edit</a>
@@ -140,7 +140,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Informasi Berita</h5>
-                <button type="button" id="x-modal" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -161,7 +161,7 @@
                 <textarea name="content" id="content_info" readonly class="form-control" cols="30" rows="10"></textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="close-modal" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -189,6 +189,10 @@
                 "showMethod": "fadeIn",
                 "hideMethod": "fadeOut"
             }
+            // toastr:: success notification
+            @if(Session('success'))
+            toastr.success('{{ session('success') }}');
+            @endif
             //tampilkan gambar ketika change input gambar pada tambah data
             $(document).on('change', '#input_foto', function() {
                 let photo = $(this)[0];
@@ -200,7 +204,7 @@
             })
             //reload halaman ketika modal muncul dan click diluar modal
             $(document).click(function(e) {
-                if ($(e.target).is('#modal-add-data, #modal-info-data, #modal-edit-data')) {
+                if ($(e.target).is('#modal-add-data, #modal-edit-data')) {
                     window.location.reload();
                 }
             });

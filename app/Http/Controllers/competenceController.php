@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student;
-use App\Models\Classroom;
 use App\Models\Competence;
 use Illuminate\Http\Request;
 
