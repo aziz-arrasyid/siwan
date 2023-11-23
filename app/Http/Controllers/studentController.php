@@ -49,15 +49,37 @@ class studentController extends Controller
   public function store(Request $request)
   {
     $request->validate(
-			[
-				'nis' => 'required',
-				'full_name' => 'required',
-			],
-			[
-				'nis.required' => 'nis tidak boleh kosong',
-				'full_name.required' => 'nama siswa tidak boleh kosong',
-			]
-		);
+		[
+			'nis' => 'required',
+			'full_name' => 'required',
+            'competence_id' => 'required',
+            'classroom_id' => 'required',
+            'birthplace' => 'required',
+            'birthdate' => 'required',
+            'gender' => 'required',
+            'religion' => 'required',
+            'contact' => 'required',
+            'address' => 'required',
+		],
+		[
+            'nis.required' => 'NIS tidak boleh kosong',
+            'full_name.required' => 'Nama siswa tidak boleh kosong',
+            'competence_id.required' => 'Jurusan siswa tidak boleh kosong',
+            'classroom_id.required' => 'Kelas siswa tidak boleh kosong',
+            'birthplace.required' => 'Tempat lahir siswa tidak boleh kosong',
+            'birthdate.required' => 'Tanggal lahir siswa tidak boleh kosong',
+            'gender.required' => 'Jenis kelamin siswa tidak boleh kosong',
+            'religion.required' => 'Agama siswa tidak boleh kosong',
+            'contact.required' => 'Nomor HP/WA siswa tidak boleh kosong',
+            'address.required' => 'Alamat siswa tidak boleh kosong',
+		]
+	);
+
+    if(Student::where('nis', $request->nis)->exists())
+    {
+        return redirect()->back()->withErrors(['error' => 'Siswa dengan NIS tersebut sudah ada']);
+    }
+
     $student = Student::create($request->all());
     User::create([
         'username' => $student->nis,
@@ -91,27 +113,39 @@ class studentController extends Controller
   public function update(Request $request, Student $student)
   {
     $request->validate(
-			[
-				'nis' => 'required',
-				'full_name' => 'required',
-                'birthplace' => 'required',
-                'birthdate' => 'required',
-                'gender' => 'required',
-                'religion' => 'required',
-                'competence_id' => 'required',
-                'classroom_id' => 'required',
-			],
-			[
-				'nis.required' => 'nis tidak boleh kosong',
-				'full_name.required' => 'nama siswa tidak boleh kosong',
-				'birthplace.required' => 'Tanggal Lahir siswa tidak boleh kosong',
-				'birthdate.required' => 'Tempat Lahir siswa tidak boleh kosong',
-				'gender.required' => 'Jenis Kelamin siswa tidak boleh kosong',
-				'religion.required' => 'Agama siswa tidak boleh kosong',
-                'competence_id.required' => 'Jurusan tidak boleh kosong',
-                'classroom_id.required' => 'Kelas tidak boleh kosong',
-			]
-		);
+        [
+            'nis' => 'required',
+            'full_name' => 'required',
+            'competence_id' => 'required',
+            'classroom_id' => 'required',
+            'birthplace' => 'required',
+            'birthdate' => 'required',
+            'gender' => 'required',
+            'religion' => 'required',
+            'contact' => 'required',
+            'address' => 'required',
+        ],
+        [
+            'nis.required' => 'NIS tidak boleh kosong',
+            'full_name.required' => 'Nama siswa tidak boleh kosong',
+            'competence_id.required' => 'Jurusan siswa tidak boleh kosong',
+            'classroom_id.required' => 'Kelas siswa tidak boleh kosong',
+            'birthplace.required' => 'Tempat lahir siswa tidak boleh kosong',
+            'birthdate.required' => 'Tanggal lahir siswa tidak boleh kosong',
+            'gender.required' => 'Jenis kelamin siswa tidak boleh kosong',
+            'religion.required' => 'Agama siswa tidak boleh kosong',
+            'contact.required' => 'Nomor HP/WA siswa tidak boleh kosong',
+            'address.required' => 'Alamat siswa tidak boleh kosong',
+        ]
+    );
+
+    if(Student::where('nis', $request->nis)->where('nis', '!=', $student->nis)->exists())
+    {
+        return response()->json([
+            'error' => 'Siswa dengan NIS tersebut sudah ada',
+        ], 422);
+    }
+
     $student->update($request->all());
 
 	return response()->json();

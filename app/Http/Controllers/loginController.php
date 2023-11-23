@@ -41,7 +41,7 @@ class loginController extends Controller
                 return redirect()->route('kreator')->with('login', 'Selamat datang '. auth()->user()->username);
             }
         }else{
-            return redirect()->route('login')->with('gagal', 'Username atau password salah.');
+            return redirect()->back()->withErrors(['error' => 'Username atau password salah.']);
         }
     }
 }

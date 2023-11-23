@@ -21,7 +21,7 @@
                 <th>NIP/NUPTK/NRHS</th>
                 <th>Nama Lengkap</th>
                 <th>Username</th>
-                <th>L/P</th>
+                <th>Jenis kelamin</th>
                 <th>Kontak</th>
                 <th>Action</th>
               </tr>
@@ -33,7 +33,7 @@
                 <td>{{ $teacher->reg_number }}</td>
                 <td>{{ $teacher->full_name }}</td>
                 <td>{{ $teacher->user->username }}</td>
-                <td>{{ $teacher->gender }}</td>
+                <td>{{ $teacher->gender == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                 <td>{{ $teacher->contact }}</td>
                 <td class="button">
                   <div class="btn-group btn-group-toggle btn-group-flat">
@@ -104,11 +104,11 @@
                   <div class="row">
                     <div class="col">
                       <label class="h5">Kontak/WA</label>
-                      <input type="text" class="form-control" name="contact" placeholder="NIP/NUPTK/NRHS">
+                      <input type="text" class="form-control" name="contact" placeholder="081218122006">
                     </div>
                     <div class="col">
                       <label class="h5">Email</label>
-                      <input type="email" class="form-control" name="email" placeholder="email">
+                      <input type="text" class="form-control" name="email" placeholder="email">
                     </div>
                   </div>
                   <div class="row">
@@ -305,37 +305,49 @@
             "hideMethod": "fadeOut"
         }
     //fungsi delete
-    $('.deleteData').on('click', function(event) {
-      event.preventDefault();
-      Swal.fire({
-        title: 'Apa kamu ingin hapus data?',
-        text: "Data yang sudah dihapus tidak bisa dikembalikan!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Iya, saya mau hapus!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          const teacher = $(this).data('id');
-          axios.delete(`/dashboard-admin/teachers/${teacher}`)
-          .then(() => {
-            Swal.fire(
-            'Terhapus!',
-            'Data nya berhasil dihapus!',
-            'success'
-            ).then(() => {
-              window.location.href = '{{ route('teachers.index') }}';
-            })
-          })
-          .catch(() => {
-            Swal.fire('Gagal dihapus', 'Terjadi kesalahan pada sisi server, hubungi developer kami', 'error');
-          })
-        }
-      })
+    $(document).on('click', '.deleteData', function(event) {
+        const teacher = $(this).data('id');
+        axios.get(`/dashboard-admin/is-wali-kelas/${teacher}`).then(response => {
+            if(response.data == true)
+            {
+                Swal.fire({
+                    title: "Sudah jadi wali kelas",
+                    text: "Tidak bisa hapus data selama jadi wali kelas",
+                    icon: "warning"
+                });
+            }else
+            {
+                event.preventDefault();
+                Swal.fire({
+                    title: 'Apa kamu ingin hapus data?',
+                    text: "Data yang sudah dihapus tidak bisa dikembalikan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Iya, saya mau hapus!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                    axios.delete(`/dashboard-admin/teachers/${teacher}`)
+                    .then(() => {
+                        Swal.fire(
+                        'Terhapus!',
+                        'Data nya berhasil dihapus!',
+                        'success'
+                        ).then(() => {
+                        window.location.href = '{{ route('teachers.index') }}';
+                        })
+                    })
+                    .catch(() => {
+                        Swal.fire('Gagal dihapus', 'Terjadi kesalahan pada sisi server, hubungi developer kami', 'error');
+                    })
+                    }
+                })
+            }
+        })
     });
     //Update data from Modal using Axios Js
-    $('.editData').on('click', function() {
+    $(document).on('click', '.editData', function() {
       teacher = $(this).data('id');
       // fetch data dari kolom input
       axios.get(`/dashboard-admin/teachers/${teacher}/edit`).then(response => {
@@ -382,9 +394,17 @@
             }
             errorMessage += errorMessages[field][0];
           }
-          Swal.fire('Data gagal di edit', errorMessage, 'error').then(() => {
-            modal.modal('show');
-          });
+          if(error.response.data.error)
+          {
+              Swal.fire('Data gagal di edit', error.response.data.error, 'error').then(() => {
+                modal.modal('show');
+              });
+          }else
+          {
+            Swal.fire('Data gagal di edit', errorMessage, 'error').then(() => {
+                modal.modal('show');
+            });
+          }
         }else{
           Swal.fire('Data gagal di edit', 'Terjadi kesalahan pada sisi server, hubungi kami segera', 'error');
         }
@@ -414,7 +434,7 @@
                 $('#username_info').val(response.data.user.username);
                 $('#tempat_lahir_info').val(response.data.birthplace);
                 $('#tanggal_lahir_info').val(moment(response.data.birthdate).format('D MMMM YYYY'));
-                $('#jenis_kelamin').val(response.data.gender == 'L' ? response.data.gender + ' (laki-laki)' : response.data.gender + ' (Perempuan)');
+                $('#jenis_kelamin').val(response.data.gender == 'L' ? 'laki-laki' : 'Perempuan');
                 $('#agama_info').val(response.data.religion);
                 $('#nomor_hp_info').val(response.data.contact);
                 $('#email_info').val(response.data.email);

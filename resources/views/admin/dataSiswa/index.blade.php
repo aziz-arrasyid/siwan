@@ -709,9 +709,17 @@
                                         }
                                         errorMessage += errorMessages[field][0];
                                     }
-                                    Swal.fire('Data gagal di edit', errorMessage, 'error').then(() => {
-                                        modal.modal('show');
-                                    });
+                                    if(error.response.data.error)
+                                    {
+                                        Swal.fire('Data gagal di edit', error.response.data.error, 'error').then(() => {
+                                            modal.modal('show');
+                                        });
+                                    }else
+                                    {
+                                        Swal.fire('Data gagal di edit', errorMessage, 'error').then(() => {
+                                            modal.modal('show');
+                                        });
+                                    }
                                 }else{
                                     Swal.fire('Data gagal di edit', 'Terjadi kesalahan pada sisi server, hubungi kami segera', 'error');
                                 }

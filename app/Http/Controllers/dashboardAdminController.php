@@ -55,4 +55,11 @@ class dashboardAdminController extends Controller
         return response()->json($class);
     }
 
+    public function IsWaliKelas($teacher_id)
+    {
+        $waliKelas = Classroom::where('teacher_id', $teacher_id)->exists();
+
+        return response()->json($waliKelas);
+    }
+
 }

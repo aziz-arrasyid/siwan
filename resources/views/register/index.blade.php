@@ -1,89 +1,102 @@
 @extends('register.layouts.main')
 
 @section('content')
-    <section class="container">
-        <header>Daftar <span>SIWAN</span></header>
-        <form class="daftar" action="{{ route('register.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="input-box">
-                <label>NIS</label>
-                <input type="number" name="nis" placeholder="2983"/>
-            </div>
-            <div class="input-box">
-                <label>Nama Lengkap</label>
-                <input type="text" name="full_name" placeholder="Shichatul Muaw'wanah"/>
-            </div>
-            <div class="input-box">
-                <label>Tempat Lahir</label>
-                <input type="text" name="birthplace" placeholder="Tanjungpinang"/>
-            </div>
-            <div class="input-box">
-                <label>Tanggal Lahir</label>
-                <input type="date" name="birthdate"/>
-            </div>
-            <div class="jk-box">
-                <h3>Jenis Kelamin</h3>
-                {{-- <div class="jk-option">
-                    <div class="gender">
-                        <input type="radio" id="lk" name="gender" checked />
-                        <label for="lk">Laki-laki</label>
+<div class="container">
+        <div class="cardy">
+            <div class="cardy-body">
+                <h3 class="kucing">Daftar</h3>
+                <form action="{{ route('register.store') }}" enctype="multipart/form-data" method="POST">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="nis">NIS</label>
+                                <input type="number" class="form-control" id="nis" name="nis"/>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label for="full_name">Nama Lengkap</label>
+                                <input type="text" class="form-control" id="full_name" name="full_name"/>
+                            </div>
+                        </div>
                     </div>
-                    <div class="gender">
-                        <input type="radio" id="pr" name="gender"/>
-                        <label for="pr">Perempaun</label>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="competence_id">Jurusan</label>
+                                <select class="form-control" id="competence_id" name="competence_id"/>
+                                    <option disabled selected>Pilih salah satu</option>
+                                    @foreach ($Jurusan as $jurusan)
+                                    <option value="{{ $jurusan->id }}">{{ $jurusan->inisial_jurusan }} ({{ $jurusan->nama_jurusan }})</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <label for="classroom_id">Kelas</label>
+                                <select class="form-control" id="classroom_id" name="classroom_id"/>
+                                    <option disabled selected>Pilih salah satu</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                </div> --}}
-                <div class="religion-box">
-                    <select name="gender">
-                        <option selected disabled>Pilih salah satu</option>
-                        <option value="L">Laki-laki</option>
-                        <option value="P">Perempuan</option>
-                    </select>
-                </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="birthdate">Tanggal Lahir</label>
+                                <input type="date" class="form-control" id="birthdate" name="birthdate"/>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <label for="birthplace">Tempat Lahir</label>
+                                <input type="text" class="form-control" id="birthplace" name="birthplace"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="gender">Jenis Kelamin</label>
+                                <select class="form-control" id="gender" name="gender"/>
+                                    <option disabled selected>Pilih salah satu</option>
+                                    <option value="L">Laki-laki</option>
+                                    <option value="P">Perempuan</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <label for="religion">Agama</label>
+                                <select class="form-control" id="religion" name="religion"/>
+                                    <option disabled selected>Pilih salah satu</option>
+                                    <option value="Islam">Islam</option>
+                                    <option value="Kristen Protestan">Kristen Protestan</option>
+                                    <option value="Kristen Katolik">Kristen Katolik</option>
+                                    <option value="Buddha">Buddha</option>
+                                    <option value="Hindu">Hindu</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact">Nomor Telepon</label>
+                        <input type="number" class="form-control" id="contact" name="contact"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Alamat</label>
+                        <textarea class="form-control" name="address" id="address" cols="30" rows="3"></textarea>
+                    </div>
+                    <div class="form-group d-flex justify-content-between">
+                        <button type="submit" class="button-selengkapnya">Daftar</button>
+                        <button type="button" id="close-register" class="btn btn-danger">close</button>
+                    </div>
+                </form>
             </div>
-            <div class="jk-box">
-                <h3>Agama</h3>
-                <div class="religion-box">
-                    <select name="religion">
-                        <option selected disabled>Pilih salah satu</option>
-                        <option value="Islam">Islam</option>
-                        <option value="Kristen Protestan">Kristen Protestan</option>
-                        <option value="Kristen Katolik">Kristen Katolik</option>
-                        <option value="Buddha">Buddha</option>
-                        <option value="Hindu">Hindu</option>
-                    </select>
-                </div>
-            </div>
-            <div class="jk-box">
-                <h3>Jurusan</h3>
-                <div class="religion-box">
-                    <select name="competence_id" id="competence_id">
-                        <option selected disabled>Pilih salah satu</option>
-                        @foreach ($Jurusan as $jurusan)
-                        <option value="{{ $jurusan->id }}">{{ $jurusan->inisial_jurusan }} ({{ $jurusan->nama_jurusan }})</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            <div class="jk-box">
-                <h3>Kelas</h3>
-                <div class="religion-box">
-                    <select name="classroom_id" id="classroom_id">
-                        <option selected disabled>Pilih salah satu</option>
-                    </select>
-                </div>
-            </div>
-            <div class="input-box">
-                <label>Kontak/WA</label>
-                <input type="number" name="contact" placeholder="081234567833"/>
-            </div>
-            <div class="input-box">
-                <label>Alamat</label>
-                <input type="text" name="address" placeholder="Jl. Nusantara, Km. 14"/>
-            </div>
-            <button type="submit">Daftar</button>
-        </form>
-    </section>
+        </div>
+    </div>
 @endsection
 
 @push('scripts')
@@ -104,6 +117,11 @@
                 "showMethod": "fadeIn",
                 "hideMethod": "fadeOut"
             }
+            //back to landing page from this page
+            $(document).on('click', '#close-register', function() {
+                // window.location.href = '{{ route('landing.page.index') }}';
+                window.history.back();
+            })
             // toastr:: error notification
             @if($errors->any())
             @foreach($errors->all() as $error)

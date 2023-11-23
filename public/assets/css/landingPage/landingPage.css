@@ -31,9 +31,26 @@
     color: #5773FF;
     text-align: center;
 }
+.kucingggg {
+    font-weight: 900;
+    /* font-size: 93px; */
+    color: #5773FF;
+    text-align: center;
+}
+.seblak {
+    font-weight: 900;
+    font-size: 222px;
+    color: #FFD30E;
+}
 .meong {
     font-weight: 500;
     font-size: 20px;
+    color: #2b2b2b;
+}
+
+.meonggg {
+    font-weight: 500;
+    /* font-size: 20px; */
     color: #2b2b2b;
 }
 .meongg {
@@ -43,24 +60,46 @@
     text-align: center;
 }
 .text {
-	border-right: 5px solid;
-	width: 100%;
+	/* border-right: 5px solid; */
 	white-space: nowrap;
+    width: 30%;
+    padding: auto;
 	overflow: hidden;
-	animation: typing 2s steps(15), cursor .4s step-end infinite alternate;
+	/* animation: typing 2s steps(15), cursor .4s step-end infinite alternate; */
 }
-@keyframes cursor {
-	50% {border-color: transparent;}
+/* @keyframes cursor {
+	78% {border-color: transparent;}
 }
 @keyframes typing {
 	from {width: 0;}
-}
+} */
 .section-padding {
 	padding: 100px 0;
 }
-.banner-image {
-	background-image: url('../img/B.png');
-	background-size: cover;
+.siyongmai {
+    position: relative;
+}
+.cincau {
+    position: relative;
+    width: 100%;
+}
+.mangga {
+    width: 100%;
+}
+.apel {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    top: -3%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.siyongmai img {
+    width: 100%;
+    height: 100%;
 }
 .siwan {
 	font-size: 25px;
@@ -75,6 +114,7 @@
     transition: 0.3s background-color;
 	text-decoration: none;
     cursor: pointer;
+    border-style: none;
 }
 .button-selengkapnya:hover {
     background-color: #ffffff;
@@ -218,7 +258,7 @@
     color: white;
 }
 .upp {
-    background: url('../img/bg-panduan.png') center/cover;
+    background: url('../../images/landingPage/AAA.svg') center/cover;
     color: white;
     text-align: center;
     padding: 100px 20px;
@@ -238,4 +278,98 @@
 }
 .cardy-body {
     padding: 23px;
+}
+/* Halaman 404 */
+.lalalala{
+    font-size: 20px;
+    font-weight: 400;
+}
+/* Post */
+.containerr {
+    margin: 50px;
+}
+.post {
+    background-color: #ffffff;
+    border-radius: 6px;
+    padding: 30px;
+    box-shadow: 0px 0px 10px 0px rgba(90, 90, 90, 0.1);
+    margin-bottom: 30px;
+}
+.post-title {
+    font-size: 40px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+.post-meta {
+    color: #696969;
+    margin-bottom: 23px;
+}
+.post-content {
+    line-height: 1.6;
+    font-size: 18px;
+    text-align: justify;
+}
+.related-posts {
+    display: flex;
+    justify-content: space-between;
+}
+.related-post {
+    flex: 0 0 calc(33.333% - 20px);
+    max-width: calc(33.333% - 20px);
+    margin-bottom: 20px;
+}
+.related-post img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+/* Post */
+.containerr {
+    margin: 50px;
+}
+.post {
+    background-color: #ffffff;
+    border-radius: 6px;
+    padding: 30px;
+    box-shadow: 0px 0px 10px 0px rgba(24, 24, 24, 0.349);
+    margin-bottom: 30px;
+    margin-top: 93px;
+}
+.post-title {
+    font-size: 40px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+.post-meta {
+    color: #696969;
+    margin-bottom: 23px;
+}
+.post-content {
+    line-height: 1.6;
+    font-size: 18px;
+    text-align: justify;
+}
+.related-posts {
+    display: flex;
+    justify-content: space-between;
+}
+.related-post {
+    flex: 0 0 calc(33.333% - 20px);
+    max-width: calc(33.333% - 20px);
+    margin-bottom: 20px;
+}
+.related-post img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+.bg {
+    background-color: #2b2b2b;
+}
+.ayam {
+    font-weight: 500;
+    font-size: 17px;
+    color: #2b2b2b;
 }

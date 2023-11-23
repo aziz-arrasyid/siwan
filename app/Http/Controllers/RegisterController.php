@@ -57,7 +57,7 @@ class RegisterController extends Controller
         ]);
         Student::create($request->all());
 
-        return redirect()->route('login')->with('successRegister', 'Akun berhasil dibuat');
+        return redirect()->route('landing.page.index')->with('successRegister', 'Akun berhasil dibuat');
     }
 
     public function getKelas($competence_id)

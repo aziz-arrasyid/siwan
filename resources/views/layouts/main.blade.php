@@ -42,6 +42,11 @@
         Data-Pelanggaran
         @elseif(Route::is('dataPanggilan'))
         Data-panggilan-Ortu/Wali
+        {{-- guru piket page --}}
+        @elseif(Route::is('guru.piket'))
+        Dashboard-Guru-Piket
+        @elseif(Route::is('siswa.pelanggaran.piket'))
+        Data-siswa-pelanggaran
         @endif
     </title>
 

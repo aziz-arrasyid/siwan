@@ -229,5 +229,4 @@ class dashboardGuruController extends Controller
 
         return response()->json($panggilan);
     }
-
 }

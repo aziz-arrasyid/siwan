@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('content');
+            $table->integer('visitors')->nullable();
             $table->string('picture');
             $table->timestamps();
         });

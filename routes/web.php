@@ -28,8 +28,8 @@ use App\Http\Controllers\dashboardGuruPiketController;
 use App\Http\Controllers\dashboardLandingPageController;
 
 // Login | Logout Routes
-Route::get('login', [loginController::class, 'index'])->middleware('guest')->name('login');
-Route::post('login/authenticate', [loginController::class, 'authenticate'])->name('authenticate');
+// Route::get('login', [loginController::class, 'index'])->middleware('guest')->name('login');
+Route::post('/authenticate', [loginController::class, 'authenticate'])->name('authenticate');
 Route::get('/face', [FaceController::class,'face'])->name('face.sign');
 // Routes for admin auth
 Route::middleware(['auth', 'userRole:admin'])->prefix('dashboard-admin')->group(function () {
@@ -45,6 +45,7 @@ Route::middleware(['auth', 'userRole:admin'])->prefix('dashboard-admin')->group(
     Route::resource('violations', violationController::class); //model data pelanggaran
     Route::resource('sekolah', SekolahController::class); //model data pelanggaran
     Route::get('/get-data-sekolah', [dashboardAdminController::class, 'showKepsek']);
+    Route::get('/is-wali-kelas/{teacher_id}', [dashboardAdminController::class, 'IsWaliKelas']);
     Route::get('/get-cek-siswa/{classroom}', [dashboardAdminController::class, 'cekSiswa']);
     Route::get('/getClassroom/{competence_id}', [dashboardAdminController::class, 'getKelas']);
 });
@@ -96,7 +97,13 @@ Route::middleware(['auth', 'userRole:kreator'])->prefix('dashboard-kreator')->gr
    Route::resource('kreator', KreatorController::class);
 });
 //route landing page
-Route::get('/landing-page-siwan', [dashboardLandingPageController::class, 'index'])->name('landing.page.index');
+Route::get('/', [dashboardLandingPageController::class, 'index'])->name('landing.page.index');
+Route::get('/visi-misi', [dashboardLandingPageController::class, 'visiMisi'])->name('visi.misi.index');
+Route::get('/tata-tertib-siswa', [dashboardLandingPageController::class, 'tataTertib'])->name('tata.tertib.index');
+Route::get('/poin-pelanggaran', [dashboardLandingPageController::class, 'poinPelanggaran'])->name('poin.pelanggaran.index');
+//route untuk berita
+Route::get('/berita-siwan', [dashboardLandingPageController::class, 'berita'])->name('berita.index');
+Route::get('/berita/{title}', [dashboardLandingPageController::class, 'singlePost'])->name('berita.single');
 //route register
 Route::get('/register-siwan', [RegisterController::class,'index'])->name('register.index');
 Route::post('/register-siwan-tambah', [RegisterController::class,'register'])->name('register.store');
