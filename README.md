@@ -71,8 +71,10 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
         <img src="public/assets/images/favicon.ico" width="400" alt="siwan logo">
     </a>
 </p>
+![Static Badge](https://img.shields.io/badge/INSTAGRAM-SIWAN-ffd30e) https://www.instagram.com/zeroarrasyid
 
-## Tentang Siwan ![Static Badge](https://img.shields.io/badge/SIWAN-ffd30e)
+
+## Tentang ![Static Badge](https://img.shields.io/badge/SIWAN-ffd30e)
 
 > [!NOTE]\
 > SIWAN adalah singkatan dari "Sistem Informasi Kesiswaan" yang merupakan aplikasi berbasis website. Dirancang untuk membantu sekolah dalam mencatat, mengelola, dan memantau data pelanggaran siswa, pengembangan karakter, serta memberikan dukungan dalam hal pemberian sanksi dan pengambilan keputusan yang berbasis data.

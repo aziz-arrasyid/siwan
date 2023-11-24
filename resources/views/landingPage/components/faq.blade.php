@@ -9,16 +9,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="tanya">
-					<div class="tanyaa">
-						<button id="faq_button">
-							<span>Siapa yang dapat menggunakan SIWAN?</span>
-							<i class="fas fa-chevron-down d-arrow"></i>
-						</button>
-						<p>Siswa/i, Wali Kelas, Guru BK, dan Admin dari SMK Negeri 4 Tanjungpinang. Setiap peran memiliki hak akses berbeda yang telah disesuaikan</p>
-					</div>
-				</div>
-				<div class="tanya">
+                <div class="tanya">
 					<div class="tanyaa">
 						<button id="faq_button">
 							<span>Apa itu SIWAN?</span>
@@ -30,6 +21,15 @@
                             pengembangan karakter, serta memberikan dukungan dalam hal pemberian sanksi dan pengambilan keputusan
                             yang berbasis data.
                         </p>
+					</div>
+				</div>
+				<div class="tanya">
+					<div class="tanyaa">
+						<button id="faq_button">
+							<span>Siapa yang dapat menggunakan SIWAN?</span>
+							<i class="fas fa-chevron-down d-arrow"></i>
+						</button>
+						<p>Siswa/i, Wali Kelas, Guru BK, dan Admin dari SMK Negeri 4 Tanjungpinang. Setiap peran memiliki hak akses berbeda yang telah disesuaikan</p>
 					</div>
 				</div>
 				<div class="tanya">
