@@ -94,6 +94,6 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ## Siapa yang dapat menggunakan SIWAN
 
 > [!NOTE]\
-> Siswa/i, Wali Kelas, Guru BK, dan Admin dari SMK Negeri 4 Tanjungpinang. Setiap peran memiliki hak akses berbeda yang telah disesuaikan.
+> Siswa/i, Wali Kelas, dan Admin dari SMK Negeri 4 Tanjungpinang. Setiap peran memiliki hak akses berbeda yang telah disesuaikan.
 
 
