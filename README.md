@@ -72,3 +72,10 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ![Nama Alternatif Gambar](public/assets/images/favicon.ico)
 
 Sahabat setia dalam perjalanan membangun masa depan siswa.
+
+<p align="center">
+    <a href="https://siwan.pplg-smkn4tpi.com/" target="_blank">
+        <img src="public/assets/images/favicon.ico" width="400" alt="siwan logo">
+    </a>
+</p>
+
