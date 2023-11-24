@@ -193,25 +193,47 @@
     @include('landingPage.components.footer')
 
     <!-- JavaScript -->
+    @if ($sekolah != null && $sekolah->latitude != null && $sekolah->longitude != null && $sekolah->name != null)
+    <script>
+         let map;
+
+        function initMap() {
+            const latitude = parseFloat("{{$sekolah->latitude}}");
+            const longitude = parseFloat("{{$sekolah->longitude}}");
+
+            map = new google.maps.Map(document.getElementById("google-maps"), {
+                center: { lat: latitude, lng: longitude },
+                zoom: 18,
+            });
+
+            new google.maps.Marker({
+                position: { lat: latitude, lng: longitude },
+                map: map,
+                title: "{{$sekolah->name}}",
+            });
+        }
+    </script>
+    @else
     <script>
         let map;
 
-    function initMap() {
-      const latitude = parseFloat("{{$sekolah->latitude}}");
-      const longitude = parseFloat("{{$sekolah->longitude}}");
+        function initMap() {
+            const latitude = parseFloat("0.9093097961632389");
+            const longitude = parseFloat("104.54413752571158");
 
-      map = new google.maps.Map(document.getElementById("google-maps"), {
-        center: { lat: latitude, lng: longitude },
-        zoom: 18,
-      });
+            map = new google.maps.Map(document.getElementById("google-maps"), {
+                center: { lat: latitude, lng: longitude },
+                zoom: 18,
+            });
 
-      new google.maps.Marker({
-        position: { lat: latitude, lng: longitude },
-        map: map,
-        title: "{{$sekolah->name}}",
-      });
-    }
+            new google.maps.Marker({
+                position: { lat: latitude, lng: longitude },
+                map: map,
+                title: "SMKN 4 Tanjungpinang",
+            });
+        }
     </script>
+    @endif
     <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('API_KEY_MAPS') }}&callback=initMap&libraries=maps,marker&v=beta"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

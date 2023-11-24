@@ -70,7 +70,7 @@ class dashboardSiswaController extends Controller
         return view('siswa.panggilanOrtuWali.index')->with([
             'DataDiri' => $student,
             'Panggilan' => PanggilanOrtu::where('student_id', $student->id)->get(),
-            'dataTitle' => 'Data panggilan ortu/wali',
+            'dataTitle' => 'Data panggilan orang tua/wali',
         ]);
     }
 

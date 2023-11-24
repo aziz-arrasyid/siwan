@@ -19,7 +19,7 @@
             <thead>
               <tr class="light">
                 <th>#</th>
-                <th>Jenis pelanggran</th>
+                <th>Nama pelanggran</th>
                 <th>Poin pelanggaran</th>
                 {{-- <th>Action</th> --}}
               </tr>

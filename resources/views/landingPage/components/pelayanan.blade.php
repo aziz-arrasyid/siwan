@@ -156,7 +156,7 @@
 					  	</div>
 					</div>
 					<div class="col-md-4">
-					  	<div class="carddd">
+					  	<div class="cardd">
 							<a class="ya" href="{{ route('berita.index') }}">
 								<div class="card-body p-4">
 									<h6 class="up-tittle">Berita Kesiswaan Terkini</h6>

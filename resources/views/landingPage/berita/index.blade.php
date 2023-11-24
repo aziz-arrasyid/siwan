@@ -56,8 +56,8 @@
 		</div>
 		<div class="apel">
 			<h1 class="meongg">Selamat Datang di</h1>
-			<h1 class="kucinggg">SIWAN</h1>
-			<p class="text">“Membangun Karakter Siswa untuk Masa Depan”</p>
+			<h1 class="kucinggg">SIWAN Berita</h1>
+			<p class="text text-center">“Cerita: Bersama Membangun Karakter, Meraih Prestasi”</p>
 		</div>
 	</section>
 
@@ -68,7 +68,7 @@
 				<div class="col-md-12">
 					<div class="section-header text-center pb-5">
 						<h2 class="kucing">Berita</h2>
-						<p>keterangan</p>
+						<p>Album: di sini seluruh cerita inspiratif kita</p>
 					</div>
 				</div>
 			</div>
@@ -111,7 +111,7 @@
 				<div class="col-md-12">
 					<div class="section-header text-center pb-5">
 						<h2 class="kucing">Berita Terpopuler</h2>
-						<p>keterangan</p>
+						<p>Cerita terdepan untuk kita</p>
 					</div>
 				</div>
 			</div>
@@ -151,27 +151,48 @@
 	@include('landingPage.components.footer')
 
 	<!-- JavaScript -->
-    <script async src="https://maps.googleapis.com/maps/api/js?key={{ env('API_KEY_MAPS') }}&callback=initMap&libraries=maps,marker&v=beta"></script>
+    @if ($sekolah != null && $sekolah->latitude != null && $sekolah->longitude != null && $sekolah->name != null)
+    <script>
+         let map;
 
+        function initMap() {
+            const latitude = parseFloat("{{$sekolah->latitude}}");
+            const longitude = parseFloat("{{$sekolah->longitude}}");
+
+            map = new google.maps.Map(document.getElementById("google-maps"), {
+                center: { lat: latitude, lng: longitude },
+                zoom: 18,
+            });
+
+            new google.maps.Marker({
+                position: { lat: latitude, lng: longitude },
+                map: map,
+                title: "{{$sekolah->name}}",
+            });
+        }
+    </script>
+    @else
     <script>
         let map;
 
-    function initMap() {
-      const latitude = parseFloat("{{$sekolah->latitude}}");
-      const longitude = parseFloat("{{$sekolah->longitude}}");
+        function initMap() {
+            const latitude = parseFloat("0.9093097961632389");
+            const longitude = parseFloat("104.54413752571158");
 
-      map = new google.maps.Map(document.getElementById("google-maps"), {
-        center: { lat: latitude, lng: longitude },
-        zoom: 18,
-      });
+            map = new google.maps.Map(document.getElementById("google-maps"), {
+                center: { lat: latitude, lng: longitude },
+                zoom: 18,
+            });
 
-      new google.maps.Marker({
-        position: { lat: latitude, lng: longitude },
-        map: map,
-        title: "{{$sekolah->name}}",
-      });
-    }
+            new google.maps.Marker({
+                position: { lat: latitude, lng: longitude },
+                map: map,
+                title: "SMKN 4 Tanjungpinang",
+            });
+        }
     </script>
+    @endif
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('API_KEY_MAPS') }}&callback=initMap&libraries=maps,marker&v=beta"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
@@ -181,7 +202,6 @@
                 const page = url.searchParams.get('page');
                 link.href = `/berita-siwan?page=${page}#berita`;
             });
-
             //clear value on modal
             $('#modal-login-data').on('hidden.bs.modal', function(e) {
                 $(this).find('input[type="text"], input[type="password"]').val('');

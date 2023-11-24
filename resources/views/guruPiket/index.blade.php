@@ -6,7 +6,7 @@
     <div class="card card-block card-stretch card-height">
       <div class="card-body">
         <div class="top-block d-flex align-items-center justify-content-between">
-          <h5>Jumlah siswa</h5>
+          <h5>Siswa</h5>
           <span class="badge badge-info">Total</span>
         </div>
         <h3>{{ $studentCount }}</h3>
@@ -17,7 +17,7 @@
     <div class="card card-block card-stretch card-height">
       <div class="card-body">
         <div class="top-block d-flex align-items-center justify-content-between">
-          <h5>Jumlah Siswa yang melanggar</h5>
+          <h5>Siswa Pelanggaran</h5>
           <span class="badge badge-info">Total</span>
         </div>
         <h3>{{ $pelanggaranCount }}</h3>

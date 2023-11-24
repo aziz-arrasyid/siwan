@@ -19,7 +19,7 @@
                             <tr class="light">
                                 <th>No</th>
                                 <th>Status panggilan</th>
-                                <th class="text-center">permasalahan</th>
+                                <th class="text-center">Permasalahan</th>
                             </tr>
                         </thead>
                         <tbody>
