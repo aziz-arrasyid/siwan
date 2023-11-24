@@ -72,7 +72,10 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
     </a>
 </p>
  
-![Static Badge](https://img.shields.io/badge/INSTAGRAM-SIWAN-ffd30e) https://www.instagram.com/zeroarrasyid
+![Static Badge](https://img.shields.io/badge/INSTAGRAM-SIWAN-ffd30e)
+https://www.instagram.com/zeroarrasyid
+
+
 
 
 ## Tentang ![Static Badge](https://img.shields.io/badge/SIWAN-ffd30e)
