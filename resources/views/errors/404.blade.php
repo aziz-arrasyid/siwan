@@ -14,8 +14,8 @@
     <div class="container">
         <div class="cardy">
             <div class="cardy-body text-center">
-                <p class="seblak">404</p>
                 <p class="cardy-text">
+                    <p class="seblak">404</p>
                     <p class="lalalala">Maaf ya! Halaman yang kamu mau tidak bisa kami temukan</p><br>
                     <a href="{{ route('landing.page.index') }}" class="button-selengkapnya">Home</a>
                 </p>

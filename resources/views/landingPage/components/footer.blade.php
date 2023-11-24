@@ -13,7 +13,7 @@
 				<a href="" class="me-4 text-reset">
 					<i class="fab fa-instagram"></i>
 				</a>
-				<a href="" class="me-4 text-reset">
+				<a href="https://github.com/aziz-arrasyid/siwan" class="me-4 text-reset">
 					<i class="fab fa-github"></i>
 				</a>
 			</div>
