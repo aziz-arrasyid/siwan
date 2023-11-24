@@ -27,7 +27,7 @@ class dashboardLandingPageController extends Controller
     public function visiMisi()
     {
         return view('landingPage.visiMisi.index')->with([
-            'title' => 'Visi da Misi',
+            'title' => 'Visi dan Misi',
             'subTitle' => 'Meliputi visi, 8 butir misi serta tujuan dan sasaran SMK Negeri 4 Tanjungpinang',
             'sekolah' => Sekolah::first(),
         ]);
