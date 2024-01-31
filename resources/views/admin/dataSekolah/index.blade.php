@@ -105,6 +105,7 @@
                         <div class="form-group col-sm-6">
                             <label class="h5" for="kepala_sekolah">Kepala Sekolah:</label>
                             <select id="kepala_sekolah" name="teacher_id" class="form-control">
+                                <option selected disabled>Pilih salah satu</option>
                                 @foreach ($Guru as $guru)
                                 <option value="{{ $guru->id }}">{{ $guru->full_name }}</option>
                                 @endforeach

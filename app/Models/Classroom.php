@@ -27,4 +27,8 @@ class Classroom extends Model
     {
         return $this->hasMany(pelanggaran::class);
     }
+
+    public function waktuAbsensi() {
+        return $this->hasMany(WaktuAbsensi::class);
+    }
 }

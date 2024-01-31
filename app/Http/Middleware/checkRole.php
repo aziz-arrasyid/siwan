@@ -24,7 +24,7 @@ class checkRole
             return $next($request);
         }
 
-        return redirect()->route('login');
+        return redirect()->route('landing.page.index');
 
     }
 }

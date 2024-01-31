@@ -780,8 +780,6 @@
                         $('#alamat_info').val(data.address);
                     }
                 })
-
-
             });
         </script>
         @endpush

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AbsensiController;
 use Monolog\Registry;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -26,6 +27,8 @@ use App\Http\Controllers\dashboardSiswaController;
 use App\Http\Controllers\dashboardKreatorController;
 use App\Http\Controllers\dashboardGuruPiketController;
 use App\Http\Controllers\dashboardLandingPageController;
+use App\Http\Controllers\PDFController;
+use App\Http\Controllers\WaktuAbsensiController;
 
 // Login | Logout Routes
 // Route::get('login', [loginController::class, 'index'])->middleware('guest')->name('login');
@@ -67,6 +70,10 @@ Route::middleware(['auth', 'userRole:guru'])->prefix('dashboard-guru')->group(fu
     Route::put('/update-profile/{teacher}', [dashboardGuruController::class, 'updateDataPribadi'])->name('updateDataPribadi');
     Route::get('/info-panggilan/{panggilan_id}', [dashboardGuruController::class, 'infoPanggilan'])->name('infoPanggilan');
     Route::resource('panggilan-ortu-wali', PanggilanOrtuController::class);
+    Route::get('waktu-absensi-kelas', [dashboardGuruController::class, 'waktuAbsensiKelas'])->name('waktuAbsensiKelas.get');
+    Route::get('get-absensi-kelas/{waktu_absensi_id}', [dashboardGuruController::class, 'getAbsensiKelas'])->name('getAbsensiKelas.get');
+    Route::get('/pdf-absensi/{id}', [PDFController::class, 'pdfAbsensi'])->name('pdf.absensi');
+    Route::get('/cek-pdf-absensi/{id}', [PDFController::class, 'cekDatapdf'])->name('cek.pdf.absensi');
     // Route::get('/siswa-pelanggaran-server', [dashboardGuruController::class, 'serverPelanggaran'])->name('server.pelanggaran');
 });
 // Routes for logout
@@ -82,6 +89,10 @@ Route::middleware(['auth', 'userRole:guruPiket'])->prefix('dashboard-guru-piket'
     Route::get('/siswa-pelanggaran', [dashboardGuruPiketController::class, 'siswaPelanggaran'])->name('siswa.pelanggaran.piket');
     Route::get('/get-classroom/{id}', [dashboardGuruPiketController::class,'getClassroom'])->name('get.classroom');
     Route::get('/get-siswa/{id}', [dashboardGuruPiketController::class, 'getSiswa'])->name('get.siswa');
+    Route::get('/waktu-absensi/{id}', [dashboardGuruPiketController::class, 'showWaktuabsensi'])->name('showWaktuabsensi');
+    Route::get('/get-siswa-absensi/{waktu_absensi_id}', [dashboardGuruPiketController::class, 'getSiswaAbsensi'])->name('getSiswaAbsensi');
+    Route::resource('waktuabsensi', WaktuAbsensiController::class);
+    Route::resource('absensi', AbsensiController::class);
 });
 //route untuk siswa
 Route::middleware(['auth', 'userRole:siswa'])->prefix('dashboard-siswa')->group(function () {

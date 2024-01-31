@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Absensi;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\Classroom;
 use App\Models\Violation;
 use App\Models\Competence;
-use App\Models\PanggilanOrtu;
 use App\Models\pelanggaran;
+use App\Models\WaktuAbsensi;
 use Illuminate\Http\Request;
+use App\Models\PanggilanOrtu;
 
 class dashboardGuruController extends Controller
 {
@@ -228,5 +230,29 @@ class dashboardGuruController extends Controller
         $panggilan->load('student');
 
         return response()->json($panggilan);
+    }
+
+    public function waktuAbsensiKelas() {
+        $Teacher = Teacher::where('user_id', Auth()->user()->id)->first();
+        $Kelas = Classroom::where('teacher_id', $Teacher->id)->first();
+        $WaktuAbsensiKelas = WaktuAbsensi::where('classroom_id', $Kelas->id)->get();
+
+        return view('guru.rekapAbsensi.index')->with([
+            'WaktuAbsensiKelas' => $WaktuAbsensiKelas,
+            'DataDiri' => $Teacher,
+            'dataTitle' => 'Rekap absensi',
+            'addData' => 'Tambah data'
+
+        ]);
+    }
+
+    public function getAbsensiKelas($waktu_absensi_id) {
+        $absensiFirst = Absensi::where('waktu_absensi_id', $waktu_absensi_id)->with('student', 'teacher')->first();
+        $absensikelas = Absensi::where('waktu_absensi_id', $waktu_absensi_id)->with('student', 'teacher')->get();
+
+        return response()->json([
+            'absensikelas' => $absensikelas,
+            'absensiFirst' => $absensiFirst,
+        ]);
     }
 }

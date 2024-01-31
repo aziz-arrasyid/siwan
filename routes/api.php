@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\Api\faceRecognition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\faceRecognition;
+use App\Http\Controllers\Api\loginControllerApi;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/face-recognition', [faceRecognition::class, 'index']);
+Route::post('login', [loginControllerApi::class, 'login']);

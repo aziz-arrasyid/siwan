@@ -30,4 +30,8 @@ class Student extends Model
   {
     return $this->hasMany(PanggilanOrtu::class);
   }
+
+  public function absensi() {
+    return $this->hasMany(Absensi::class);
+  }
 }

@@ -25,4 +25,8 @@ class Teacher extends Model
     {
         return $this->hasOne(Sekolah::class);
     }
+
+    public function absensi() {
+        return $this->hasMany(Absensi::class);
+    }
 }
