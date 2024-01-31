@@ -244,6 +244,7 @@
                                             <select id="${item.id}" name="status" class="form-control status">
                                                 <option selected disabled>Pilih salah satu absensi</option>
                                                 <option value="Hadir">Hadir</option>
+                                                <option value="Izin">Izin</option>
                                                 <option value="Sakit">Sakit</option>
                                                 <option value="Alpha">Alpha</option>
                                             </select>
@@ -282,7 +283,6 @@
                 data_array.push({student_id, status, teacher_id, status_guru, waktu_absensi_id})
 
             });
-            console.log(data_array)
             $.ajax({
                 url: '{{ route('absensi.store') }}',
                 method: 'POST',

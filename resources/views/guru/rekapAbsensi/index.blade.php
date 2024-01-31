@@ -159,7 +159,6 @@
         })
 
         $(document).on('click', '#pdfAbsensi', function() {
-            console.log(id)
             $.ajax({
                 url: `/dashboard-guru/cek-pdf-absensi/${id}`,
                 method: 'GET',
